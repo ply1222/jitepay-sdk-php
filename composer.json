@@ -1,0 +1,21 @@
+{
+    "name": "ply1222/manage",
+    "description": "ply1222 && php",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ply1222\\Manage\\": "src/Ply1222/Manage"
+        }
+    },
+    "authors": [
+        {
+            "name": "ply1222",
+            "email": "1093064385@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php" : ">=5.6"
+    }
+}
