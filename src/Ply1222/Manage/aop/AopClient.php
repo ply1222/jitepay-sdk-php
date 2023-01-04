@@ -42,6 +42,11 @@ class AopClient
     public string $public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq3hpNTHzYCXf5FdPdMiQGNyOmO19QVZlMS09U5ZnuegJEdSTqwryJKeZTV+u6YMrn9i0IBZlpCIvIGpRL9mhGORt5Abr2fhUktVjsXJVF3jWsdw3EbSf127+2wrvrjgsrj3Qwo6pOj7YIOLof6oyX3CjtpzN6LxwUfGsxk5/rnr0rFUMQ7xgkXfsUEfqeYN4D386Z3cxKw4NsnZ4KMMcIlbgKL1miwKNsWQjGqN/cSGD+H3NdKv7RENKx7ZaVvQTyjPU+vCqmFSpw/kJP9tF5rfIC4FMXTXSdtMNB282CZ7JxJgqb+2ppl5OtIIH3KCEuqAxR9nFFwGVLhfEc0nGeQIDAQAB";
 
     /**
+     * @var string AES密钥
+     */
+    public string $aes_key = "";
+
+    /**
      * @var string 网关
      */
     public string $gatewayUrl = "";
