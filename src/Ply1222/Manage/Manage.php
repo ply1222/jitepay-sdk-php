@@ -13,7 +13,7 @@ class Manage
         return Manage::jsapi();
     }
 
-    private string $host = 'http://192.168.1.100:8181';
+    private string $host = 'https://api.jitepay.com';
 
     private AopClient $aop;
 
