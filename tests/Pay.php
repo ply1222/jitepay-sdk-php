@@ -15,7 +15,7 @@ class Pay
     public function __construct()
     {
         $aop = new AopClient();
-        $aop->notify_url = "https://api.jitepay.com/v1/test";
+        $aop->notify_url = "";//https://api.jitepay.com/v1/test
         $this->aop = $aop;
     }
 

@@ -28,7 +28,7 @@ class AopClient
     /**
      * @var string 异步通知回调地址
      */
-    public string $notify_url;
+    public string $notify_url = "https://api.jitepay.com/v1/test";
 
     /**
      * @var string 私钥
