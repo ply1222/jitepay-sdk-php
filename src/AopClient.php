@@ -1,8 +1,7 @@
 <?php
 
-namespace Ply1222\Manage\aop;
+namespace Jitepay\JitepaySdkPhp;
 
-use Ply1222\Manage\Client;
 
 class AopClient
 {
@@ -44,7 +43,7 @@ class AopClient
     /**
      * @var string AES密钥
      */
-    public string $aes_key = "";
+    public string $aes_key = "LdYyGospwlUfuttE9sFpJl0kJNQZ353J8PyFY0MLU10";
 
     /**
      * @var string 网关
@@ -300,11 +299,11 @@ class AopClient
     /**
      * 解密
      *
-     * @param string $associatedData AES GCM additional authentication data
-     * @param string $nonceStr AES GCM nonce
-     * @param string $ciphertext AES GCM cipher text
+     * @param string $associatedData 附加数据
+     * @param string $nonceStr       加密使用的随机串
+     * @param string $ciphertext     数据密文
      *
-     * @return string|bool      Decrypted string on success or FALSE on failure
+     * @return string|bool           解密成功|失败
      */
     public function decryptToString($associatedData, $nonceStr, $ciphertext)
     {

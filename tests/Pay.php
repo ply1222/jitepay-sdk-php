@@ -1,17 +1,12 @@
 <?php
-namespace Ply1222\Manage;
+namespace Jitepay\JitepaySdkPhp;
 
-use Ply1222\Manage\aop\AopClient;
-use Ply1222\Manage\aop\request\PayBankRequest;
-use Ply1222\Manage\aop\request\PrepayRequest;
-use Ply1222\Manage\aop\request\RefundRequset;
+use Jitepay\JitepaySdkPhp\Request\PayBankRequest;
+use Jitepay\JitepaySdkPhp\Request\PrepayRequest;
+use Jitepay\JitepaySdkPhp\Request\RefundRequset;
 
-class Manage
+class Pay
 {
-    public function manage()
-    {
-        return Manage::jsapi();
-    }
 
     private string $host = 'https://api.jitepay.com';
 

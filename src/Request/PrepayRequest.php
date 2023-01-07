@@ -1,6 +1,6 @@
 <?php
 
-namespace Ply1222\Manage\aop\request;
+namespace Jitepay\JitepaySdkPhp\Request;
 
 class PrepayRequest
 {

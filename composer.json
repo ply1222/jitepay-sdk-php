@@ -1,11 +1,10 @@
 {
-    "name": "ply1222/manage",
-    "description": "ply1222 && php",
-    "type": "library",
+    "name": "jitepay/jitepay-sdk-php",
+    "type": "project",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Ply1222\\Manage\\": "src/Ply1222/Manage"
+            "Jitepay\\JitepaySdkPhp\\": "src/"
         }
     },
     "authors": [
@@ -16,9 +15,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php" : ">=7.4",
-      "ext-curl": "*",
+        "ext-openssl": "*",
         "ext-json": "*",
-        "ext-openssl": "*"
+        "ext-curl": "*"
     }
 }

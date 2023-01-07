@@ -1,6 +1,6 @@
 <?php
 
-namespace Ply1222\Manage;
+namespace Jitepay\JitepaySdkPhp;
 
 class Client
 {
