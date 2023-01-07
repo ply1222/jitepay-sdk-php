@@ -5,9 +5,9 @@ use Jitepay\JitepaySdkPhp\Request\PayBankRequest;
 use Jitepay\JitepaySdkPhp\Request\PrepayRequest;
 use Jitepay\JitepaySdkPhp\Request\RefundRequset;
 
+var_dump((new Pay)->jsapi());
 class Pay
 {
-
     private string $host = 'https://api.jitepay.com';
 
     private AopClient $aop;

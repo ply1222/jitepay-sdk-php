@@ -28,7 +28,7 @@ class AopClient
     /**
      * @var string 异步通知回调地址
      */
-    public string $notify_url = "https://api.jitepay.com/v1/test";
+    public string $notify_url = "http://192.168.1.11:80/pay.php";
 
     /**
      * @var string 私钥
@@ -234,7 +234,12 @@ class AopClient
      */
     public function getSign($data)
     {
-        $mch_private_key = file_get_contents($this->private_key);
+        $mch_private_key = $this->private_key;
+        $mch_private_key = chunk_split($mch_private_key, 64, "\n");
+        $mch_private_key = "-----BEGIN RSA PRIVATE KEY-----\n" . $mch_private_key . "-----END RSA PRIVATE KEY-----\n";
+        $pi_key = openssl_pkey_get_private($mch_private_key);
+        if (!$pi_key) die('$pi_key 格式不正确');
+        //$mch_private_key = file_get_contents($this->private_key);
         $message = $this->appid . "\n" .
             $data['timestamp'] . "\n" .
             $data['noncestr'] . "\n" .
