@@ -14,19 +14,23 @@ class PayBankRequest
 
     private string $description;//描述
 
-    private string $bank_no;//银行卡号
+    private string $identfy;//银行卡号
 
-    private string $true_name;//真实姓名
+    private string $name;//真实姓名
 
-    private string $bank_code;//银行标识代码
+    private string $identify_type;//身份类型
 
-    private string $bank_name;//银行名称
+    private string $mobile;//手机号码
 
-    private string $bank_province;//办理银行卡所在省份
+    private string $id_card_num;//身份证号
 
-    private string $bank_city;//办理银行卡所在城市
-
-    private string $bank_branch_name;//在XX银行的XX分行
+    private array $account = [
+        "account_type" => 2,
+        "bank_name" => "", //银行名称
+        "bank_province" => "", //银行所在省
+        "bank_city" => "",       //银行所在市
+        "bank_branch_name" => "", //支行名称
+    ];
 
     private string $notify_url;//通知回调地址
 
@@ -115,113 +119,97 @@ class PayBankRequest
     /**
      * @return string
      */
-    public function getBankNo(): string
+    public function getIdentfy(): string
     {
-        return $this->bank_no;
+        return $this->identfy;
     }
 
     /**
-     * @param string $bank_no
+     * @param string $identfy
      */
-    public function setBankNo(string $bank_no): void
+    public function setIdentfy(string $identfy): void
     {
-        $this->bank_no = $bank_no;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTrueName(): string
-    {
-        return $this->true_name;
-    }
-
-    /**
-     * @param string $true_name
-     */
-    public function setTrueName(string $true_name): void
-    {
-        $this->true_name = $true_name;
+        $this->identfy = $identfy;
     }
 
     /**
      * @return string
      */
-    public function getBankCode(): string
+    public function getName(): string
     {
-        return $this->bank_code;
+        return $this->name;
     }
 
     /**
-     * @param string $bank_code
+     * @param string $name
      */
-    public function setBankCode(string $bank_code): void
+    public function setName(string $name): void
     {
-        $this->bank_code = $bank_code;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBankName(): string
-    {
-        return $this->bank_name;
-    }
-
-    /**
-     * @param string $bank_name
-     */
-    public function setBankName(string $bank_name): void
-    {
-        $this->bank_name = $bank_name;
+        $this->name = $name;
     }
 
     /**
      * @return string
      */
-    public function getBankProvince(): string
+    public function getIdentifyType(): string
     {
-        return $this->bank_province;
+        return $this->identify_type;
     }
 
     /**
-     * @param string $bank_province
+     * @param string $identify_type
      */
-    public function setBankProvince(string $bank_province): void
+    public function setIdentifyType(string $identify_type): void
     {
-        $this->bank_province = $bank_province;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBankCity(): string
-    {
-        return $this->bank_city;
-    }
-
-    /**
-     * @param string $bank_city
-     */
-    public function setBankCity(string $bank_city): void
-    {
-        $this->bank_city = $bank_city;
+        $this->identify_type = $identify_type;
     }
 
     /**
      * @return string
      */
-    public function getBankBranchName(): string
+    public function getMobile(): string
     {
-        return $this->bank_branch_name;
+        return $this->mobile;
     }
 
     /**
-     * @param string $bank_branch_name
+     * @param string $mobile
      */
-    public function setBankBranchName(string $bank_branch_name): void
+    public function setMobile(string $mobile): void
     {
-        $this->bank_branch_name = $bank_branch_name;
+        $this->mobile = $mobile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdCardNum(): string
+    {
+        return $this->id_card_num;
+    }
+
+    /**
+     * @param string $id_card_num
+     */
+    public function setIdCardNum(string $id_card_num): void
+    {
+        $this->id_card_num = $id_card_num;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAccount(): array
+    {
+        return $this->account;
+    }
+
+    /**
+     * @param array $account
+     */
+    public function setAccount(array $account): void
+    {
+        $this->account = $account;
     }
 
     /**

@@ -1,11 +1,22 @@
 <?php
 namespace Jitepay\JitepaySdkPhp;
 
+
+require_once(dirname(__FILE__).'/../src/AopClient.php');
+require_once(dirname(__FILE__).'/../src/Request/PrepayRequest.php');
+require_once(dirname(__FILE__).'/../src/Client.php');
+require_once(dirname(__FILE__).'/Notify.php');
+
+
 use Jitepay\JitepaySdkPhp\Request\PayBankRequest;
 use Jitepay\JitepaySdkPhp\Request\PrepayRequest;
 use Jitepay\JitepaySdkPhp\Request\RefundRequset;
 
-var_dump((new Pay)->jsapi());
+//$json_params = file_get_contents("php://input");
+//var_dump($json_params);
+//var_dump($_POST);
+//var_dump((new Pay)->verifyNotify());
+//var_dump((new Pay)->jsapi());
 class Pay
 {
     private string $host = 'https://api.jitepay.com';
@@ -15,7 +26,7 @@ class Pay
     public function __construct()
     {
         $aop = new AopClient();
-        $aop->notify_url = "";//https://api.jitepay.com/v1/test
+        $aop->notify_url = "http://m.huoxunnet.cn/tests/Notify.php";//https://api.jitepay.com/v1/test
         $this->aop = $aop;
     }
 
@@ -31,15 +42,18 @@ class Pay
         $request = new PrepayRequest();
         $request->setBizContent(json_encode([
             "amount" => [
-                "total" => 0.1,// 订单总金额
+                "total" => 0.01,// 订单总金额
                 "currency" => "CNY",
             ],
-            "channel" => "alipay_wap",
+            "channel" => "wx_pub",
             "appid" => "2",
             "mchid" => "2",
             "description" => "test",
             "notify_url" => $aop->notify_url,
-            "out_trade_no" => "15452665465296598998",
+            "out_trade_no" => date('YmdHis'),
+            "detail" => [
+                "cost_price" => 0.01,
+            ],
             "payer" => [
                 "openid" => ""
             ],
@@ -61,8 +75,8 @@ class Pay
     {
         $aop = $this->aop;
         $aop->method = 'GET';
-        $mchid = "2";
-        $aop->gatewayUrl = $this->host . '/v1/pay/transactions/out-trade-no/202212150958497173?mchid=' . $mchid;
+        $out_trade_no = "1111111111111";
+        $aop->gatewayUrl = $this->host . "/v1/pay/transactions/out-trade-no/$out_trade_no";
         $aop->execute('');
     }
 
@@ -120,24 +134,28 @@ class Pay
     {
         $aop = $this->aop;
         $aop->method = 'POST';
-        $aop->gatewayUrl = $this->host . '/v1/pay/pay_bank';
+        $aop->gatewayUrl = $this->host . 'v1/transfer/promotion/transfer';
         $request = new PayBankRequest();
         $request->setBizContent(json_encode([
             "mchid" => "2",
             "appid" => "2",
-            "out_trade_no" => "46226621656665566595",
+            "out_trade_no" => date('YmdHis'),
             "description" => "test",
-            "bank_no" => "6236691370002321599",
-            "true_name" => "彭玲艳",
-            "bank_code" => "CCB",
-            "bank_name" => "中国建设银行",
-            "bank_province" => "江苏省",
-            "bank_city" => "南京",
-            "bank_branch_name" => "建行",
-            "amount" => "0.1",
+            "identify" => "6236691370002321599",
+            "identify_type" => "BANKCARD_ACCOUNT",
+            "name" => "彭玲艳",
+            "account" => [
+                "account_type" => 2,
+                "bank_name" => "中国建设银行",
+                "bank_province" => "江苏省",
+                "bank_city" => "南京",
+                "bank_branch_name" => "建行",
+            ],
+            "amount" => "0.01",
             "notify_url" => $aop->notify_url,
         ]));
         $aop->withdraw($request);
+        var_dump($request);
     }
 
     /**
@@ -148,8 +166,8 @@ class Pay
     {
         $aop = $this->aop;
         $aop->method = 'GET';
-        $mchid = "2";
-        $aop->gatewayUrl = $this->host . '/v1/pay/query_bank/46226621656665566595?mchid=' . $mchid;
+        $out_trade_no = "46226621656665566595";
+        $aop->gatewayUrl = $this->host . "v1/transfer/promotion/transfer/$out_trade_no";
         $aop->execute();
     }
 
@@ -158,11 +176,11 @@ class Pay
      * @param array $post
      * @return array
      */
-    public function verifyNotify(array $post): array
+    public function verifyNotify(array $post)
     {
+        //var_dump($_POST);
         // 检查平台证书序列号
         $post = $this->aop->verifyNotify($post);
-
         $body = json_decode($post['body'], true);
         if ($body['event_type'] == 'TRANSACTION.SUCCESS') {
             $resource = $this->aop->decryptToString($body['resource']['associated_data'], $body['resource']['nonce'], $body['resource']['ciphertext']);
@@ -178,3 +196,6 @@ class Pay
     }
 
 }
+
+// $verify = new Pay();
+// $verify->verifyNotify();

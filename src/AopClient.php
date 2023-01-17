@@ -2,6 +2,9 @@
 
 namespace Jitepay\JitepaySdkPhp;
 
+use Jitepay\JitepaySdkPhp\Exception\ValidationException;
+
+require_once(dirname(__FILE__).'/../tests/Notify.php');
 
 class AopClient
 {
@@ -23,27 +26,27 @@ class AopClient
     /**
      * @var string 商户API证书序列号
      */
-    public string $serial_no="DYK60QJXXTDJASYJBTGZC7YTEPKTEBXTQCXCNW2O";
+    public string $serial_no = "d14fea32f79b52f03d7a7624a711a6ec";
 
     /**
      * @var string 异步通知回调地址
      */
-    public string $notify_url = "http://192.168.1.11:80/pay.php";
+    public string $notify_url = "http://m.huoxunnet.cn/tests/Notify.php";
 
     /**
-     * @var string 私钥
+     * @var string RSA私钥
      */
-    public string $private_key = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCreGk1MfNgJd/kV090yJAY3I6Y7X1BVmUxLT1Tlme56AkR1JOrCvIkp5lNX67pgyuf2LQgFmWkIi8galEv2aEY5G3kBuvZ+FSS1WOxclUXeNax3DcRtJ/Xbv7bCu+uOCyuPdDCjqk6Ptgg4uh/qjJfcKO2nM3ovHBR8azGTn+uevSsVQxDvGCRd+xQR+p5g3gPfzpndzErDg2ydngowxwiVuAovWaLAo2xZCMao39xIYP4fc10q/tEQ0rHtlpW9BPKM9T68KqYVKnD+Qk/20Xmt8gLgUxdNdJ20w0HbzYJnsnEmCpv7ammXk60ggfcoIS6oDFH2cUXAZUuF8RzScZ5AgMBAAECggEALDDaHGWFLZBVRUnjJlvSFzYwYeVC1KXpamUYWwR2MwlD3R6F+BzYDu5KqhAwyemOQqHcujBLfaN5tcbwqX5S8FFeqNfHzOMdGMJ58O9gUq5H1orEfoGoeCMY92a4IpRDn5w6wwl1P5eWp9MSzGQWm1YyOwvqXULDR7sbJfhxG4wT7n/ctzYs1vMrqCSbqyRP//q3oGKNOq0CgUzS05EVrwxyz71mZLl3ISnaOq34cH+vU9N9Agze3AdrC/M+Z9X6g4FICEOtAmPE1JXoZk9yklQrqb6l+VKvikOgM0AFxF6A3ll3FRXWWcSP8O/FjFtnqkayKWwT0+O0VVui9b9KAQKBgQDrRLqpVcCg0SFLKn4R6VxfdCXz/7d3bQULgiBZ6C4rvpt6GBFsw2ke7sjRaJYjvkqecQtwYl65vsoNCH1hvbyC3gaC58JkLMIU2uM8b8sL3GEiz+2PvGuPggGWXrdyBLnLg2i1dSGqxA+2LKbpuCV7wzCffXl7eALJHI31YAO0YQKBgQC6lIA8zxSDvkbjLnRF4ODuxPVtZwTJRlKIK8ysawW/fczFRyR4lJVXro3t/EHgAt2whIY02iHVMlGTDz8ekLkuvneJKXdAW0CA9Wlj+/2KQQsqCesa/tBAJy6cWyv5Lv8LVlbfnYHjD9rU9CQi5lpqw4C4cFcsrAHLefhEfW3JGQKBgCGmvQRHjbvy7c4wj8PEG0BT/rG92+IrJ9OTk0kI2sHLC7YVBzkFYl3YTcUWLpOCPm4XQUmb6GytC319v2FhoDsfwtKqj7WAaWpOPL6CRwq1RPeTwikTDFeEgvGdLqQSZPjlHO8Hh/9C9/RYwq8fdc0UCDpn2h589fkKKov0ZdNBAoGAfyRAuq9WSGw6PAdk3lVekfaPVAzWex27keVe5MNNOG9OQcS3+p8toYFmYBz8+tyZGvdDyPI4CeLvKapDFd4DAvJx3HrwM1+7deVF+wc1f6fRJsV5e3zWhlDs90k9juFSlPQx4NGhOAyOz3zKvyl/xa8RoR2UmfFgi7rCzlE2pckCgYEAwhBs5IPRiB8MTDGptASi3BJfNSK5U0ustIHA68MnB9s1LXhLv5G6xhQi9dWpPmFGpD5AF3MgdMbAXwERzh4gVXkiMq38zkodyuFVOi2ixVtJZGEwxcy0t/YU5z8oAkAcjdCagVyTtUd5bm5fjpRnssWIXVFld0ZMaQ5vScPmqF4=";
+    public string $private_key = "MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCi4ctoc+5Rvxju1zXUDeip5Hk6SJFvDLZGdCFNH4fA4ZYUHxp8jGFlNASfD6Y94AKGvHL1iEk/E6hGJloR5xYh8oeQ5iL59f6n3/yPgO8Yj4aO1EHdGXAob6dArSIG7fFZGyV0IqxbmwNRoTMBGfsypdMLR3iwZz6sB78WOyJWrV8lUdSZ7oDLp+kq2zvplXOUTxS+JnMIc2m+yPSPGq8J1+pbN9CPgA81lpM64TuIQYv/PtISMk/1l2oWH3mCeAsnIGSCzx+dKxj9cqfH5WNtsNxM8//hxT+l0UXRqou5oysvQhCltxjLRN3oXPFI3MrbLWzfNiEm1MvB7JRMTrRTAgMBAAECggEASV1osEifjKSFh3baIQSOyo9FZ1IuZ5WTOFKweTt9ewxg+/kyhez5JYtzlW2IFJCksqmJIjzbuRSSk95MbYnntyy1kTeHg40gwd6qtLx/dVGYaxcB/6OomB4KeKBDFlnwfpEyoofHmI9OxGLWRWW9doeocokjvFkUqonmsQ27nsxJ50GbT+LgT/WqB/r+T+IihLq6LdcjBlwQC/WfrNHldpMupPtvGmO0vcC09lNBGD5F+h7CisoJJgbU7kXu+cgbHGBD7Nq+rEvLgFHnjl9ipCSHgokEcKe82NaF4yc3+W1dA0v6XkjdLj8h7Znn2WDTo3zeITXGlfOxyugN0SE2qQKBgQDdMHsb9APRIH59PqJFD89jL8jL7hs7vEAZdk9cokW0+W172vmagW7pwmRfQvergb8Ja2Gug/F9oed7gyBgs5nby9UZIWTe3KtX6frVRoihvXb9Yi18rMJ9lY7LtP+3p0jj63L0DdNn7YAmFweA0pOybyj6x9y+kBnrx9nX6OMnhQKBgQC8hCmq7JPh89YoexCpQoys54Bacobb+1sSrKBhJ7rTvtZ2Knj1BbVdh8EijdI9KknyZ48U66z+I6R1b/70u8MPB81GAuOTMPVaexUHEPORtUxElTWLlCmfkYbnivqjo7dWfxxgeEJc/G5me1TI89sRmkwm+Gpkt0Qtof9xNu439wKBgGIUEUK/3MFqaywWDdYZwJf2pE7o8eJ3AuVHdMFaoxYwU7/LxUohgpDcxa0IANJn4dHHb7T2hKp0lDRMXJsEiIDRzVgrWpMHvmJpOfRAJm2xmYWZdxoFcOhG3N6vD4TcBJIr4Pke+FLpGR3KsGUK+rrwV3d8EAHf296U65+1gKQRAoGAMLIvFUDxXl+fRWusvRw8vHk8daC5519BgkxnTVF2+DWGrpWAE0L7O4LSx/s8gKJI4b4QfsX2NNu+IrvgbxWFaH+KbfhXEvGFn27F2sJtOIlNfzXP1BNcwSRVZcBHyDeFJ2nEScMm2WA3oG9hUltzjlN+Ml7fFM8mZGdBVdxrorcCgYA4ULjrjTawADV1oVDSxiLRDBcWVeQxdjWZNt1ZLLG4g11DMr0FKv6zEvFPbX1URwjBwFfHIXe/qJmYyUf+q6F8h4SUWuW2y5knqazjxCDlQzG2SsFF0cqpDlnQhfEV/IzwEL+sYPglfkGRBjwuU1h7mMi7nIan1xbCt+/75qN/6w==";
 
     /**
-     * @var string 公钥
+     * @var string RSA公钥
      */
-    public string $public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq3hpNTHzYCXf5FdPdMiQGNyOmO19QVZlMS09U5ZnuegJEdSTqwryJKeZTV+u6YMrn9i0IBZlpCIvIGpRL9mhGORt5Abr2fhUktVjsXJVF3jWsdw3EbSf127+2wrvrjgsrj3Qwo6pOj7YIOLof6oyX3CjtpzN6LxwUfGsxk5/rnr0rFUMQ7xgkXfsUEfqeYN4D386Z3cxKw4NsnZ4KMMcIlbgKL1miwKNsWQjGqN/cSGD+H3NdKv7RENKx7ZaVvQTyjPU+vCqmFSpw/kJP9tF5rfIC4FMXTXSdtMNB282CZ7JxJgqb+2ppl5OtIIH3KCEuqAxR9nFFwGVLhfEc0nGeQIDAQAB";
+    public string $public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAouHLaHPuUb8Y7tc11A3oqeR5OkiRbwy2RnQhTR+HwOGWFB8afIxhZTQEnw+mPeAChrxy9YhJPxOoRiZaEecWIfKHkOYi+fX+p9/8j4DvGI+GjtRB3RlwKG+nQK0iBu3xWRsldCKsW5sDUaEzARn7MqXTC0d4sGc+rAe/FjsiVq1fJVHUme6Ay6fpKts76ZVzlE8UviZzCHNpvsj0jxqvCdfqWzfQj4APNZaTOuE7iEGL/z7SEjJP9ZdqFh95gngLJyBkgs8fnSsY/XKnx+VjbbDcTPP/4cU/pdFF0aqLuaMrL0IQpbcYy0Td6FzxSNzK2y1s3zYhJtTLweyUTE60UwIDAQAB";
 
     /**
      * @var string AES密钥
      */
-    public string $aes_key = "LdYyGospwlUfuttE9sFpJl0kJNQZ353J8PyFY0MLU10";
+    public string $api_key = "VMjuVYmRy7E3qlx8tSkjlSmxj3Dvm5U8";
 
     /**
      * @var string 网关
@@ -72,7 +75,7 @@ class AopClient
     public function auth($url, $http_method = 'GET', $body = '')
     {
         // Authorization: <schema> <token>
-        $url_parts = parse_url($url);
+        //$url_parts = parse_url($url);
         $timestamp = time();
         $nonce_str = $this->getRandChar();
         $mch_private_key = $this->private_key;
@@ -80,9 +83,9 @@ class AopClient
         $mch_private_key = "-----BEGIN RSA PRIVATE KEY-----\n" . $mch_private_key . "-----END RSA PRIVATE KEY-----\n";
         $pi_key = openssl_pkey_get_private($mch_private_key);
         if (!$pi_key) die('$pi_key 格式不正确');
-        $canonical_url = ($url_parts['path'] . (!empty($url_parts['query']) ? "?${url_parts['query']}" : ""));
+        //$canonical_url = ($url_parts['path'] . (!empty($url_parts['query']) ? "?${url_parts['query']}" : ""));
         $message = $http_method . "\n" .
-            $canonical_url . "\n" .
+            $url . "\n" .
             $timestamp . "\n" .
             $nonce_str . "\n" .
             $body . "\n";
@@ -118,8 +121,10 @@ class AopClient
             "payer" => $array['payer'],
             "scene_info" => $array['scene_info'],
             "settle_info" => $array['settle_info'],
+            "detail" => $array['detail']
         ];
         $response = $this->execute($body);
+        var_dump($response);
 
 //        //调起支付API
 //        $data["appid"] = $this->appid;//应用ID
@@ -152,18 +157,56 @@ class AopClient
     public function withdraw($request)
     {
         $array = json_decode($request->getBizContent(),true);
+
+        //订单号
+        if (empty($array['out_trade_no'])) {
+            throw new ValidationException("OutTradeNo cannot be empty");
+        }
+
+        //类型
+        if (empty($array['identify_type'])) {
+            throw new ValidationException("IdentifyType cannot be empty");
+        }
+
+        //银行卡号
+        if (empty($array['identify'])) {
+            throw new ValidationException("Identify cannot be empty");
+        }
+
+        //真实姓名
+        if (empty($array['name'])){
+            throw new ValidationException("Name cannot be empty");
+        }
+
+        //手机号码
+        if (!empty($array['mobile'])) {
+            $this->getEncrypt($array['mobile']);
+        }
+
+        //身份证号码
+        if(!empty($array['id_card_num'])) {
+            $this->getEncrypt($array['id_card_num']);
+        }
+
+        //金额
+        if (empty($array['amount'])) {
+            throw new ValidationException("Amount cannot be empty");
+        }
+
+        //描述
+        if (empty($array["description"])) {
+            throw new ValidationException("Description cannot be empty");
+        }
+
         $body = [
             "mchid" => $array['mchid'],
             "appid" => $array['appid'],
             "out_trade_no" => $array['out_trade_no'],
             "description" => $array['description'],
-            "bank_no" => $this->getEncrypt($array['bank_no']),
-            "true_name" => $this->getEncrypt($array['true_name']),
-            "bank_code" => $array['bank_code'],
-            "bank_name" => $array['bank_name'],
-            "bank_province" => $array['bank_province'],
-            "bank_city" => $array['bank_city'],
-            "bank_branch_name" => $array['bank_branch_name'],
+            "identify" => $this->getEncrypt($array['identify']),
+            "identify_type" => $array['identify_type'],
+            "name" => $this->getEncrypt($array['name']),
+            "account" => $array['account'],
             "amount" => $array['amount'],
             "notify_url" => $array['notify_url'],
         ];
@@ -279,22 +322,25 @@ class AopClient
     public function verifyNotify(array $post): array
     {
         // 检查平台证书序列号
-        if ($post['header']['pay-serial'] == $this->serial_no) {
+        if ($post['header']['Pay-Serial'] !== $this->serial_no) {
             return [];
         }
+        (new Notify)->write($post);
 
         // 构造验签名串 应答时间戳,应答随机串,应答主体
-        $data      = $post['header']['pay-timestamp'] . "\n" . $post['header']['pay-nonce'] . "\n"
+        $data      = $post['header']['Pay-Timestamp'] . "\n" . $post['header']['Pay-Nonce'] . "\n"
             . $post['body'] . "\n";
-        $signature = base64_decode($post['header']['pay-signature']);// 解密应答签名
+        $signature = base64_decode($post['header']['Pay-Signature']);// 解密应答签名
         // 微信支付平台证书,通过java工具下载,并非apiclient_cert.pem
         //$pub_key_id = openssl_pkey_get_public(file_get_contents($this->public_key));
         $mch_public_key = $this->public_key;
+        (new Notify)->write($mch_public_key);
         $mch_public_key = chunk_split($mch_public_key,64,"\n");
         $mch_public_key = "-----BEGIN PUBLIC KEY-----\n" . $mch_public_key . "-----END PUBLIC KEY-----\n";
         $pb_key = openssl_pkey_get_public($mch_public_key);
         if(!$pb_key) die('pb_key 格式不正确');
         $ok         = openssl_verify($data, $signature, $mch_public_key, OPENSSL_ALGO_SHA256);
+        (new Notify)->write($ok);
         if ($ok != 1) {
             return [];
         }
@@ -312,14 +358,22 @@ class AopClient
      */
     public function decryptToString($associatedData, $nonceStr, $ciphertext)
     {
+        $notify = new Notify();
         $ciphertext = base64_decode($ciphertext);
         if (strlen($ciphertext) <= 16) {
             return false;
         }
         // openssl (PHP >= 7.1 support AEAD)
         $ctext = substr($ciphertext, 0, -16);
+        $notify->write($ctext);
+        $notify->write($ciphertext);
         $authTag = substr($ciphertext, -16);
-        return openssl_decrypt($ctext, 'aes-256-gcm', $this->aes_key, OPENSSL_RAW_DATA, $nonceStr,
+        $notify->write($authTag);
+        $notify->write($this->api_key);
+        $notify->write($nonceStr);
+        $notify->write(openssl_decrypt($ctext, 'aes-256-gcm', $this->api_key, OPENSSL_RAW_DATA, $nonceStr,
+            $authTag, $associatedData));
+        return openssl_decrypt($ctext, 'aes-256-gcm', $this->api_key, OPENSSL_RAW_DATA, $nonceStr,
             $authTag, $associatedData);
     }
 }

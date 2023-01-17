@@ -69,6 +69,11 @@ class PrepayRequest
         "profit_sharing" => false,
     ];
 
+    //优惠功能
+    private array $detail = [
+        "cost_price" => "0.01"
+    ];
+
     private string $bizContent;
 
     /**
@@ -261,6 +266,22 @@ class PrepayRequest
     public function setSettleInfo(array $settle_info): void
     {
         $this->settle_info = $settle_info;
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getDetail(): array
+    {
+        return $this->detail;
+    }
+
+    /**
+     * @param array|string[] $detail
+     */
+    public function setDetail(array $detail): void
+    {
+        $this->detail = $detail;
     }
 
     /**
