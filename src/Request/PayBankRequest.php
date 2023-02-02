@@ -12,24 +12,21 @@ class PayBankRequest
 
     private string $out_trade_no;//外部订单号
 
-    private string $description;//描述
-
-    private string $identfy;//银行卡号
-
-    private string $name;//真实姓名
-
-    private string $identify_type;//身份类型
+    private string $remark;//描述
 
     private string $mobile;//手机号码
 
     private string $id_card_num;//身份证号
 
-    private array $account = [
-        "account_type" => 2,
-        "bank_name" => "", //银行名称
-        "bank_province" => "", //银行所在省
-        "bank_city" => "",       //银行所在市
-        "bank_branch_name" => "", //支行名称
+    private array $payee = [
+        "identity" => "",          //银行卡号
+        "identity_type" => "",     //身份类型
+        "name" => "",              //真实姓名
+        "account_type" => 2,       //类型
+        "bank_name" => "",         //银行名称
+        "bank_province" => "",     //银行所在省
+        "bank_city" => "",         //银行所在市
+        "bank_branch_name" => "",  //支行名称
     ];
 
     private string $notify_url;//通知回调地址
@@ -103,65 +100,17 @@ class PayBankRequest
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getRemark(): string
     {
-        return $this->description;
+        return $this->remark;
     }
 
     /**
-     * @param string $description
+     * @param string $remark
      */
-    public function setDescription(string $description): void
+    public function setRemark(string $remark): void
     {
-        $this->description = $description;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdentfy(): string
-    {
-        return $this->identfy;
-    }
-
-    /**
-     * @param string $identfy
-     */
-    public function setIdentfy(string $identfy): void
-    {
-        $this->identfy = $identfy;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdentifyType(): string
-    {
-        return $this->identify_type;
-    }
-
-    /**
-     * @param string $identify_type
-     */
-    public function setIdentifyType(string $identify_type): void
-    {
-        $this->identify_type = $identify_type;
+        $this->remark = $remark;
     }
 
     /**
@@ -199,17 +148,17 @@ class PayBankRequest
     /**
      * @return array
      */
-    public function getAccount(): array
+    public function getPayee(): array
     {
-        return $this->account;
+        return $this->payee;
     }
 
     /**
-     * @param array $account
+     * @param array $payee
      */
-    public function setAccount(array $account): void
+    public function setPayee(array $payee): void
     {
-        $this->account = $account;
+        $this->payee = $payee;
     }
 
     /**

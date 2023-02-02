@@ -38,7 +38,7 @@ class Pay
     {
         $aop = $this->aop;
         $aop->method = 'POST';
-        $aop->gatewayUrl = $this->host . '/v1/pay/transactions/jsapi';
+        $aop->gatewayUrl = $this->host . "/v1/pay/transactions/jsapi";
         $request = new PrepayRequest();
         $request->setBizContent(json_encode([
             "amount" => [
@@ -134,21 +134,21 @@ class Pay
     {
         $aop = $this->aop;
         $aop->method = 'POST';
-        $aop->gatewayUrl = $this->host . 'v1/transfer/promotion/transfer';
+        $aop->gatewayUrl = $this->host . "/v1/transfer/promotion/transfer";
         $request = new PayBankRequest();
         $request->setBizContent(json_encode([
             "mchid" => "2",
             "appid" => "2",
             "out_trade_no" => date('YmdHis'),
-            "description" => "test",
-            "identify" => "6236691370002321599",
-            "identify_type" => "BANKCARD_ACCOUNT",
-            "name" => "彭玲艳",
-            "account" => [
+            "remark" => "test",
+            "payee" => [
+                "identity" => "6236691370002321599",
+                "identity_type" => "BANKCARD_ACCOUNT",
+                "name" => "彭玲艳",
                 "account_type" => 2,
                 "bank_name" => "中国建设银行",
                 "bank_province" => "江苏省",
-                "bank_city" => "南京",
+                "bank_city" => "南京市",
                 "bank_branch_name" => "建行",
             ],
             "amount" => "0.01",
@@ -167,7 +167,7 @@ class Pay
         $aop = $this->aop;
         $aop->method = 'GET';
         $out_trade_no = "46226621656665566595";
-        $aop->gatewayUrl = $this->host . "v1/transfer/promotion/transfer/$out_trade_no";
+        $aop->gatewayUrl = $this->host . "/v1/transfer/promotion/transfer/$out_trade_no";
         $aop->execute();
     }
 

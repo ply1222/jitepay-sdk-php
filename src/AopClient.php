@@ -164,19 +164,21 @@ class AopClient
         }
 
         //类型
-        if (empty($array['identify_type'])) {
-            throw new ValidationException("IdentifyType cannot be empty");
+        if (empty($array['payee']['identity_type'])) {
+            throw new ValidationException("IdentityType cannot be empty");
         }
 
         //银行卡号
-        if (empty($array['identify'])) {
-            throw new ValidationException("Identify cannot be empty");
+        if (empty($array['payee']['identity'])) {
+            throw new ValidationException("Identity cannot be empty");
         }
+        $array['payee']['identity'] = $this->getEncrypt($array['payee']['identity']);
 
         //真实姓名
-        if (empty($array['name'])){
+        if (empty($array['payee']['name'])){
             throw new ValidationException("Name cannot be empty");
         }
+        $array['payee']['name'] = $this->getEncrypt($array['payee']['name']);
 
         //手机号码
         if (!empty($array['mobile'])) {
@@ -194,19 +196,16 @@ class AopClient
         }
 
         //描述
-        if (empty($array["description"])) {
-            throw new ValidationException("Description cannot be empty");
+        if (empty($array["remark"])) {
+            throw new ValidationException("Remark cannot be empty");
         }
 
         $body = [
             "mchid" => $array['mchid'],
             "appid" => $array['appid'],
             "out_trade_no" => $array['out_trade_no'],
-            "description" => $array['description'],
-            "identify" => $this->getEncrypt($array['identify']),
-            "identify_type" => $array['identify_type'],
-            "name" => $this->getEncrypt($array['name']),
-            "account" => $array['account'],
+            "remark" => $array['remark'],
+            "payee" => $array['payee'],
             "amount" => $array['amount'],
             "notify_url" => $array['notify_url'],
         ];
